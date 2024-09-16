@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTable</title>
+    <style>
+        body{background-image: url(/airport.jpg);}
+        .table{margin-bottom: 100px; display: flex; gap: 130px;}
+        .table input{padding: 10px; background-color: bisque; border-radius: 10px;}
+        .chair label{color: white;}
+        .bag label{color: white;}
+        .table button{padding: 10px; background-color: bisque;  border-radius: 10px;}
+        .table select{padding: 10px; background-color: bisque;  border-radius: 10px;}
+    </style>
+</head>
+<body>
+    <div class="table">
+
+    <div class="chair">
+        <label for="rows">Rows</label>
+        <input type="number" id="rows" placeholder="Rows">
+    </div>
+    <div class="bag">
+        <label for="columns">Columns</label>
+        <input type="number" id="columns" placeholder="Columns">
+    </div>
+    <div>
+        <select id="operation">
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>
+    </div>
+    <div>
+        <button onclick="generateTable()">Generate Table</button>
+    </div>
+</div>
+<div id="table-container"></div>
+    
+    <script>
+        function generateTable() {
+            const columns = parseInt(document.getElementById('columns').value);
+            const rows = parseInt(document.getElementById('rows').value);
+            const operation = document.getElementById('operation').value;
+
+            let tableHTML = "<table border='1'><tbody>";
+
+            for (let h = 1; h <= rows; h++) {
+                tableHTML += "<tr>";
+                for (let j = 1; j <= columns; j++) {
+                    let result;
+                    switch (operation) {
+                        case 'add':
+                            result = `${h} + ${j} = ${h + j}`;
+                            break;
+                        case 'subtract':
+                            result = `${h} - ${j} = ${h - j}`;
+                            break;
+                        case 'multiply':
+                            result = `${h} x ${j} = ${h * j}`;
+                            break;
+                        case 'divide':
+                            result = (j !== 0) ? `${h} / ${j} = ${(h / j).toFixed(2)}` : 'Undefined';
+                            break;
+                        default:
+                            result = 'Invalid operation';
+                    }
+                    tableHTML += `<td>${result}</td>`;
+                }
+                tableHTML += "</tr>";
+            }
+
+            tableHTML += "</tbody></table>";
+            document.getElementById('table-container').innerHTML = tableHTML;
+        }
+    </script>
+</body>
+</html>
